@@ -11,7 +11,7 @@ class User(Base):
     id = Column('id', Integer, Identity(start=1, cycle=False), 
                 primary_key=True, index=True, unique=True, nullable=False)
 
-    email = Column('email', String, index=Tunique=True, nullable=False)
+    email = Column('email', String, index=True, unique=True, nullable=False)
     hashedPw = Column('hashedPw', String, nullable=False)
 
     # Names
@@ -20,5 +20,5 @@ class User(Base):
 
     # Optional fields
     contactNo = Column('contactNo', VARCHAR(15), nullable=True) # Follows E.164 format
-    # is_active = Column(Boolean, default=True)
+    is_active = Column(Boolean, default=True)
 
