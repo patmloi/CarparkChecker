@@ -1,10 +1,10 @@
 from typing import Optional
 from pydantic import BaseModel
 
-class userBase(BaseModel): 
+class UserBase(BaseModel): 
     id: int
 
-class userCreate(userBase):
+class UserCreate(UserBase):
     email: str 
     pw: str
 
@@ -12,7 +12,7 @@ class userCreate(userBase):
     lName: str
     contactNo: Optional[str]
 
-class user(userBase): 
+class User(UserBase): 
     isActive: bool 
 
     class Config: 
