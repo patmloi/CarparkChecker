@@ -1,4 +1,4 @@
-from sqlalchemy import VARCHAR, Boolean, Column, ForeignKey, Integer, String
+from sqlalchemy import VARCHAR, Boolean, Column, ForeignKey, Integer, String, Identity
 from sqlalchemy.orm import relationship
 
 from .database import Base
@@ -8,7 +8,10 @@ class User(Base):
 
     # Compulsory fields 
     # Login details
-    email = Column('email', String, unique=True, index=True, nullable=False)
+    id = Column('id', Integer, Identity(start=1, cycle=False), 
+                primary_key=True, index=True, unique=True, nullable=False)
+
+    email = Column('email', String, index=Tunique=True, nullable=False)
     hashedPw = Column('hashedPw', String, nullable=False)
 
     # Names
