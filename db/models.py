@@ -20,5 +20,5 @@ class User(Base):
 
     # Optional fields
     contactNo = Column('contactNo', VARCHAR(15), nullable=True) # Follows E.164 format
-    isActive = Column(Boolean, default=True)
+    isActive = Column('isActive', Boolean, default=True, nullable=False)
 
