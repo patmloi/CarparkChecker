@@ -5,7 +5,7 @@ from sqlalchemy.orm import sessionmaker
 # Database URL: SQL Lite 
 # PostgreSQL: "postgresql://user:password@postgresserver/db"
 # SQLite: "sqlite:///./sql_app.db"
-dbUrl =  "sqlite:///./sql_app.db"
+dbUrl =  "sqlite:///./db/sql_app.db"
 
 # SQLALchemy engine 
 engine = create_engine(
@@ -19,3 +19,11 @@ sessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 # Base: Returns class 
 Base = declarative_base()
+
+def getDb():
+    db = sessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()
+        

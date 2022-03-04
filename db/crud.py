@@ -1,10 +1,10 @@
 from sqlalchemy.orm import Session
 from . import models, schemas
 
-def createUser(db: Session, user: schemas.UserCreate, hashedPw: str):
+def createUser(db: Session, user: schemas.UserCreateInternal): 
     dbUser = models.User(
         email = user.email,
-        hashedPw = hashedPw,
+        hashedPw = user.hashedPw,
         fName = user.fName, 
         lName = user.lName, 
         contactNo = user.contactNo
