@@ -1,13 +1,13 @@
 from sqlalchemy.orm import Session
 from . import models, schemas
 
-def createUser(db: Session, user: schemas.UserCreate):
+def createUser(db: Session, user: schemas.UserCreate, hashedPw: str):
     dbUser = models.User(
-            email = user.email,
-            hashedPw = user.hashedPw,
-            fName = user.fName, 
-            lName = user.lName, 
-            contactNo = user.contactNo
+        email = user.email,
+        hashedPw = hashedPw,
+        fName = user.fName, 
+        lName = user.lName, 
+        contactNo = user.contactNo
     )
     db.add(dbUser)
     db.commit()
