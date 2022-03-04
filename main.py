@@ -71,14 +71,10 @@ async def getCurrentActiveUser(currentUser: User=Depends(getCurrentUser)) -> Use
         raise HTTPException(status_code=400, detail="Inactive user")
     return currentUser
 
-@app.get("/")
-async def root():
-    return {"message": "Hello World"}
 
-
-# 1. Registration
 @app.post("/register", response_model=schemas.User)
 def createUser(user: schemas.UserCreate, db: Session = Depends(getDb)):
+    ''' 1. Registration '''
 
     # Check for existing users with the same email
     dbUser = crud.getUserByEmail(db, email=user.email)
@@ -95,9 +91,10 @@ def createUser(user: schemas.UserCreate, db: Session = Depends(getDb)):
     
     return crud.createUser(db=db, user=updatedUser)
 
-# 2. Login
 @app.post("/token", response_model=Token)
 async def login(formData: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(getDb)):
+    ''' 2. Login '''
+
     # Autheticate user: Password check 
     user = authUser(formData.username, formData.password, db)
 
@@ -117,16 +114,16 @@ async def login(formData: OAuth2PasswordRequestForm = Depends(), db: Session = D
 
     return {"access_token": token, "token_type": "bearer"}
 
-# 3. View member details
+
 @app.get("/me", response_model= User)
 async def readUserMe(currentUser: User = Depends(getCurrentActiveUser)): 
+    ''' 3. View member details '''
     return currentUser
 
 
-# 4.Carpark avaialability 
 @app.post("/availability")
 async def readCarparkAvail(currentUser: User = Depends(getCurrentActiveUser), dateTime: Optional[datetime] = Form(None)):
-    print(bool(currentUser))
+    ''' 4. Carpark avaialability '''
     if currentUser:
         carparkAvail = await getCarparkAvail(dateTime)
     return carparkAvail
