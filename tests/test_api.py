@@ -281,13 +281,20 @@ def test_availabilityUnauthenticated(createTestDatabase, getAuthenticatedToken):
     assert data["detail"] == "Not authenticated"
 
 
-def test_readMeWrongToken(createTestDatabase, getAuthenticatedToken):
+def test_availabilityWrongToken(createTestDatabase, getAuthenticatedToken):
 
     token = getAuthenticatedToken
     invalid_token = token[:-5] + "eeeee"
 
-    response = client.get("/me", headers={"Authorization": f"Bearer {invalid_token}"})
-
+    response = client.post(
+        "/availability",
+        headers = {
+            "Authorization": f"Bearer {invalid_token}"
+        },
+        data = {
+            "dateTime": ""
+        }
+    )
     assert response.status_code == 401, response.text
 
     data = response.json()
